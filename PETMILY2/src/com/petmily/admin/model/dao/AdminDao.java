@@ -33,12 +33,13 @@ public class AdminDao {
 		
 	}
 
-	public ArrayList<AdminUser> userList(Connection conn, int cPage, int numPerPage) {
+	public ArrayList<AdminUser> userList(Connection conn, int cPage, int numPerPage, String type) {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<AdminUser> list = new ArrayList<AdminUser>();
 		String sql = prop.getProperty("userList");
+		sql = sql.replaceAll("ORTYPERO",type);
 		try {
 			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
@@ -51,6 +52,8 @@ public class AdminDao {
 				u.setUserId(rs.getString("USER_ID"));
 				u.setUserName(rs.getString("USER_NAME"));
 				u.setUserBirth(rs.getString("USER_BIRTH_DAY"));
+				u.setStarCount(rs.getDouble("STAR"));
+				u.setBlindCount(rs.getInt("BCOUNT"));
 				list.add(u);
 			}
 			
@@ -84,50 +87,5 @@ public class AdminDao {
 		return count;
 	}
 
-	public ArrayList<AdminUser> reviewCount(Connection conn, ArrayList<AdminUser> list) {
-		
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = prop.getProperty("rvCount");
-		try {
-			pstmt = conn.prepareStatement(sql);
-			for(int i=0;i<list.size();i++) {
-				pstmt.setString(1, list.get(i).getUserId());
-				rs = pstmt.executeQuery();
-				
-				if(rs.next()) {
-					list.get(i).setStarCount(rs.getInt(1));
-				}
-				
-			}
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return list;
-	}
-	
-	public ArrayList<AdminUser> blindCount(Connection conn, ArrayList<AdminUser> list) {
-		
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = prop.getProperty("bCount");
-		try {
-			for(int i=0;i<list.size();i++) {
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, list.get(i).getUserId());
-				rs = pstmt.executeQuery();
-				rs.next();
-				list.get(i).setBlindCount(rs.getInt(1));
-			}
-			
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return list;
-	}
 
 }

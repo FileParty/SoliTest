@@ -38,32 +38,21 @@ public class AdminUserListServlet extends HttpServlet {
 		if(request.getParameter("cPage")!=null) {
 			cPage = Integer.parseInt(request.getParameter("cPage"));
 		}
-		String type = "userBirth";
+		String type = "USER_NAME";
 		if(request.getParameter("type")!=null) {
 			type = request.getParameter("type");
 		}
 		int numPerPage = 10;
 		
-		ArrayList<AdminUser> list = new AdminService().userList(cPage,numPerPage);
-		
+		ArrayList<AdminUser> list = new AdminService().userList(cPage,numPerPage,type);
+		System.out.println(type);
 		int totalDate = new AdminService().boardCount();
-		String url = request.getContextPath() + "/admin/user_list";
+		String url = request.getContextPath() + "/admin/user_list?type="+(type.equals("BCOUNT DESC")?"BCOUNT%20DESC":type);
 		String pageBar = getPageBar(url,totalDate,cPage,numPerPage);
 		
-		for(AdminUser u : list) {
-			System.out.println(u);
-		}
 		
-		for(int i=0;i<list.size();i++) {
-			for(int j=0;j<list.size();j++) {
-				switch(type) {
-				case "userBirth" : break;
-				case "StarCount" : break;
-				case "BlindCount" : break;
-				}
-			}
-		}
 		
+		request.setAttribute("type", type);
 		request.setAttribute("pageBar", pageBar);
 		request.setAttribute("userList", list);
 		request.getRequestDispatcher("/views/admin/adminUserService.jsp").forward(request, response);

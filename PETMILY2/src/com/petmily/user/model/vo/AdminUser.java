@@ -1,11 +1,11 @@
 package com.petmily.user.model.vo;
 
-public class AdminUser implements Comparable{
+public class AdminUser {
 	
 	private String userId;
 	private String userName;
 	private String userBirth;
-	private int StarCount;
+	private double StarCount;
 	private int BlindCount;
 	
 	public AdminUser() {
@@ -36,11 +36,11 @@ public class AdminUser implements Comparable{
 		this.userBirth = userBirth;
 	}
 
-	public int getStarCount() {
+	public double getStarCount() {
 		return StarCount;
 	}
 
-	public void setStarCount(int starCount) {
+	public void setStarCount(double starCount) {
 		StarCount = starCount;
 	}
 
@@ -58,11 +58,6 @@ public class AdminUser implements Comparable{
 				+ StarCount + ", BlindCount=" + BlindCount + "]";
 	}
 
-	@Override
-	public int compareTo(Object o) {
-		
-		return 0;
-	}
 	
 	
 	

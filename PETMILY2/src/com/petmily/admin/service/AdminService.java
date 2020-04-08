@@ -13,14 +13,11 @@ public class AdminService {
 	
 	AdminDao dao = new AdminDao();
 	
-	public ArrayList<AdminUser> userList(int cPage, int numPerPage) {
+	public ArrayList<AdminUser> userList(int cPage, int numPerPage, String type) {
 		
 		Connection conn = getConnection();
 		
-		ArrayList<AdminUser> list = dao.userList(conn, cPage, numPerPage);
-		list = dao.reviewCount(conn, list);
-		list = dao.blindCount(conn, list);
-		
+		ArrayList<AdminUser> list = dao.userList(conn, cPage, numPerPage, type);
 		close(conn);
 		return list;
 	}

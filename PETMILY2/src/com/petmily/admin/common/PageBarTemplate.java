@@ -13,20 +13,20 @@ public class PageBarTemplate {
 		int pageEnd = pageNo+pageBarSize-1;
 		
 		if(!(pageNo==1)) {
-			pageBar += "<a href='" + url + "?cPage="+(pageNo-1)+"'>[이전]</a>";
+			pageBar += "<a href='" + url + "&cPage="+(pageNo-1)+"'>[이전]</a>";
 		}
 		
 		while(!(pageNo>pageEnd||pageNo>totalPage)) {
 			if(pageNo==cPage) {
 				pageBar += "<span>"+pageNo+"</span>";
 			} else {
-				pageBar += "<a href='" + url + "?cPage="+pageNo+"'>"+pageNo+"</a>";
+				pageBar += "<a href='" + url + "&cPage="+pageNo+"'>"+pageNo+"</a>";
 			}
 			pageNo++;
 		}
 		
 		if(!(pageNo>totalPage)) {
-			pageBar += "<a href='" + url + "?cPage="+pageNo+"'>[다음]</a>";
+			pageBar += "<a href='" + url + "&cPage="+pageNo+"'>[다음]</a>";
 		}
 			
 			
